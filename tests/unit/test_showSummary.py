@@ -2,7 +2,7 @@ import pytest
 import json
 
 
-def test_showSummary(client, mocker):
+def test_showSummary_with_valid_email(client, mocker):
     """
     GIVEN that you are on the index page
     WHEN you enter a valid email
@@ -56,3 +56,12 @@ def test_showSummary(client, mocker):
 
     assert "Welcome, Test@email1.com" in response_data
     # assert "Welcome, john@simplylift.co" in response_data
+
+
+def test_showSummary_with_invalid_email(client, mocker):
+    """
+    GIVEN that you are on the index page
+    WHEN you enter an invalid email
+    THEN you stay on the index page and an error message is displayed
+    """
+    pass

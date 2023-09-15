@@ -3,6 +3,11 @@ import json
 
 
 def test_should_correctly_open_club_file(mocker):
+    """
+    GIVEN that you have a json file with competition data
+    WHEN you run the load function
+    THEN the data are correctly loaded
+    """
 
     data = {"competitions": [
             {
@@ -28,8 +33,13 @@ def test_should_correctly_open_club_file(mocker):
 
 
 def test_should_give_message_for_file_unknown(mocker):
+    """
+    GIVEN that you do NOT have a competition json file
+    WHEN you run the load function
+    THEN the program stops and display an error message stating the reason
+    """
 
-    expected_value = "Fichier competitions non trouvé"
+    expected_value = "Fichier competitions.json non trouvé"
     mock_open = mocker.mock_open()
     mock_open = mocker.mock_open.side_effect = FileNotFoundError
     mocker.patch('builtins.open', mock_open)
@@ -41,8 +51,14 @@ def test_should_give_message_for_file_unknown(mocker):
 
 
 def test_should_give_message_for_file_empty(mocker):
+    """
+    GIVEN that you have an empty competition json file
+    WHEN you run the load function
+    THEN the program stops and display an error message stating the reason
+    """
+
     data = ""
-    expected_value = "Le fichier competition est vide"
+    expected_value = "Le fichier competitions.json est vide"
 
     read_data = json.dumps(data)
     mock_open = mocker.mock_open(read_data=read_data)
