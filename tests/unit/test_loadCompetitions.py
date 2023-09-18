@@ -39,7 +39,7 @@ def test_should_give_message_for_file_unknown(mocker):
     THEN the program stops and display an error message stating the reason
     """
 
-    expected_value = "Fichier competitions.json non trouvé"
+    expected_value = "competitions.json file not found"
     mock_open = mocker.mock_open()
     mock_open = mocker.mock_open.side_effect = FileNotFoundError
     mocker.patch('builtins.open', mock_open)
@@ -58,7 +58,7 @@ def test_should_give_message_for_file_empty(mocker):
     """
 
     data = ""
-    expected_value = "Le fichier competitions.json est vide"
+    expected_value = "The competitions.json file is empty"
 
     read_data = json.dumps(data)
     mock_open = mocker.mock_open(read_data=read_data)
