@@ -23,7 +23,7 @@ def test_purchasePlaces_with_correct_values(client):
 
     # the page displayed is the summary
     assert "Welcome, Test@email1.com" in response_data
-    # a message is dispalyed to assert booking
+    # a message is displayed to assert booking
     assert "Great-booking complete!" in response_data
     # number of available points should be initial - booked places:
     # 15 - 10 = 5
