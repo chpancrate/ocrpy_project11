@@ -1,7 +1,7 @@
 import pytest
 
 
-def test_showSummary_with_valid_email(client, monkeypatch):
+def test_showSummary_with_valid_email(client):
     """
     GIVEN that you are on the index page
     WHEN you enter a valid email
@@ -16,7 +16,7 @@ def test_showSummary_with_valid_email(client, monkeypatch):
     assert "Welcome, Test@email1.com" in response_data
 
 
-def test_showSummary_with_invalid_email(client, mocker):
+def test_showSummary_with_invalid_email(client):
     """
     GIVEN that you are on the index page
     WHEN you enter an invalid email
