@@ -12,17 +12,17 @@ def test_purchasePlaces_with_correct_values(client):
     # club initial points : 15
     # competition initial places : 25
 
-    post_data = {"club": "Test Name 1",
-                 "competition": "Test competition 1",
+    post_data = {"club": "Simply Lift",
+                 "competition": "Spring Festival",
                  "places": "10"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    #print(response_data)
+    # print(response_data)
 
     # the page displayed is the summary
-    assert "Welcome, Test@email1.com" in response_data
+    assert "Welcome, john@simplylift.co" in response_data
     # a message is displayed to assert booking
     assert "Great-booking complete!" in response_data
     # number of available points should be initial - booked places:
@@ -47,14 +47,14 @@ def test_purchasePlaces_with_places_required_gt_available_points(client):
     # club initial points : 4
     # competition initial places : 7
 
-    post_data = {"club": "Test Name 2",
-                 "competition": "Test competition 2",
+    post_data = {"club": "Iron Temple",
+                 "competition": "Fall Classic",
                  "places": "6"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    #print(response_data)
+    # print(response_data)
 
     # the page displayed is the booking page
     assert "How many places?" in response_data
@@ -76,14 +76,14 @@ def test_purchasePlaces_with_places_required_gt_12(client):
     # club initial points : 15
     # competition initial places : 25
 
-    post_data = {"club": "Test Name 1",
-                 "competition": "Test competition 1",
+    post_data = {"club": "Simply Lift",
+                 "competition": "Spring Festival",
                  "places": "13"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    #print(response_data)
+    # print(response_data)
 
     # the page displayed is the booking page
     assert "How many places?" in response_data
@@ -105,14 +105,14 @@ def test_purchasePlaces_with_places_required_gt_available_places(client):
     # club initial points : 15
     # competition initial places : 7
 
-    post_data = {"club": "Test Name 1",
-                 "competition": "Test competition 2",
+    post_data = {"club": "Simply Lift",
+                 "competition": "Fall Classic",
                  "places": "10"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    #print(response_data)
+    # print(response_data)
 
     # the page displayed is the booking page
     assert "How many places?" in response_data
@@ -135,13 +135,13 @@ def test_purchasePlaces_with_wrong_club(client):
     # competition initial places : 25
 
     post_data = {"club": "wrong club",
-                 "competition": "Test competition 1",
+                 "competition": "Spring Festival",
                  "places": "10"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    #print(response_data)
+    # print(response_data)
 
     # the page displayed is the booking page
     assert "How many places?" in response_data
@@ -163,17 +163,16 @@ def test_purchasePlaces_with_wrong_competition(client):
     # club initial points : 15
     # competition initial places : 25
 
-    post_data = {"club": "Test Name 1",
+    post_data = {"club": "Simply Lift",
                  "competition": "wrong competition",
                  "places": "10"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    #print(response_data)
+    # print(response_data)
 
     # the page displayed is the booking page
     assert "How many places?" in response_data
     # an error message is dispalyed
     assert "Something went wrong please try again." in response_data
-
