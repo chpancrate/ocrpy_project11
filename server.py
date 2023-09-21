@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
@@ -31,6 +32,14 @@ def showSummary():
     try:
         club = [club for club in clubs if club['email']
                 == request.form['email']][0]
+        print("XXX-today", datetime.now())
+
+        for competition in competitions:
+            competition_date = datetime.strptime(competition['date'],
+                                                 "%Y-%m-%d %H:%M:%S")
+            print("XXX-comp date", competition_date)
+            competition['is_not_in_past'] = datetime.now() < competition_date
+
         return render_template('welcome.html',
                                club=club,
                                competitions=competitions)
