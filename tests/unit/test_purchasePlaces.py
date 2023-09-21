@@ -88,7 +88,7 @@ def test_purchasePlaces_with_places_required_gt_12(client):
     # the page displayed is the booking page
     assert "How many places?" in response_data
     # an error message is displayed
-    assert "You cannot book more than 12 places" in response_data
+    assert "You cannot book more than 12 places." in response_data
 
 
 def test_purchasePlaces_with_places_required_gt_available_places(client):
