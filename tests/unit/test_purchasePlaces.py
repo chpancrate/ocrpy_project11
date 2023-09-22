@@ -14,7 +14,7 @@ def test_purchasePlaces_with_correct_values(client):
 
     post_data = {"club": "Simply Lift",
                  "competition": "Spring Festival",
-                 "places": "10"}
+                 "places": "1"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
@@ -26,11 +26,11 @@ def test_purchasePlaces_with_correct_values(client):
     # a message is displayed to assert booking
     assert "Great-booking complete!" in response_data
     # number of available points should be initial - booked places:
-    # 15 - 10 = 5
-    assert "Points available: 5" in response_data
-    # number of remaining places should be initial = booked places:
-    # 25 - 10 = 15
-    assert "Number of Places: 15" in response_data
+    # 15 - 1 = 14
+    assert "Points available: 14" in response_data
+    # number of remaining places should be initial - booked places:
+    # 25 - 1 = 24
+    assert "Number of Places: 24" in response_data
 
 
 def test_purchasePlaces_with_places_required_gt_available_points(client):
@@ -73,8 +73,8 @@ def test_purchasePlaces_with_places_required_gt_12(client):
     THEN an error message is displayed
     """
     # data from club and competition comes from json test files
-    # club initial points : 15
-    # competition initial places : 25
+    # club initial points : 14
+    # competition initial places : 24
 
     post_data = {"club": "Simply Lift",
                  "competition": "Spring Festival",
