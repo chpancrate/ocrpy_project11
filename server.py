@@ -32,7 +32,6 @@ clubs = loadClubs()
 
 @app.route('/')
 def index():
-    abort(500)
     return render_template('index.html', clubs=clubs)
 
 
@@ -59,8 +58,19 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in clubs if c['name'] == club][0]
-    foundCompetition = [c for c in competitions if c['name'] == competition][0]
+    try:
+        foundClub = [c for c in clubs if c['name'] == club][0]
+    except IndexError:
+        # if not found we raise a page not found error
+        abort(404)
+
+    try:
+        foundCompetition = [c for c in competitions if c['name']
+                            == competition][0]
+    except IndexError:
+        # if not found we raise a page not found error
+        abort(404)
+
     if foundClub and foundCompetition:
         return render_template('booking.html',
                                club=foundClub,
