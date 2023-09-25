@@ -6,8 +6,8 @@
 </head>
 <body>
     <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    Please enter your secretary email to continue:
-    {% with messages = get_flashed_messages()%}
+    Please enter your secretary email to book places:
+    {% with messages = get_flashed_messages() %}
     <form action="showSummary" method="post">
         <label for="email">Email:</label>
         <input type="email" name="email" id=""/>
@@ -17,10 +17,23 @@
     {% if messages %}
         <ul>
        {% for message in messages %}
-            <li>{{message}}</li>
+            <li>{{ message }}</li>
         {% endfor %}
        </ul>
     {% endif %}
     {% endwith %}
+
+    <table style="border-spacing: 10px">
+        <tr>
+            <th>Clubs</td>
+            <th>Points</td>
+        </tr>
+        {% for club in clubs %}
+        <tr>
+            <td>{{ club['name'] }}</td>
+            <td style="text-align: center">{{ club['points'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
