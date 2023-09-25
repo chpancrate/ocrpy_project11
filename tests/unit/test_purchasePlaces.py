@@ -143,10 +143,8 @@ def test_purchasePlaces_with_wrong_club(client):
 
     # print(response_data)
 
-    # the page displayed is the booking page
-    assert "How many places?" in response_data
-    # an error message is dispalyed
-    assert "Something went wrong please try again." in response_data
+    # the error 500 page is displayed
+    assert "<h1>An internal server error occured</h1>" in response_data
 
 
 def test_purchasePlaces_with_wrong_competition(client):
@@ -172,7 +170,5 @@ def test_purchasePlaces_with_wrong_competition(client):
 
     # print(response_data)
 
-    # the page displayed is the booking page
-    assert "How many places?" in response_data
-    # an error message is dispalyed
-    assert "Something went wrong please try again." in response_data
+    # the error 500 page is displayed
+    assert "<h1>An internal server error occured</h1>" in response_data

@@ -1,6 +1,13 @@
 import json
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import (Flask,
+                   render_template,
+                   request,
+                   redirect,
+                   flash,
+                   url_for,
+                   abort)
+
 
 
 def loadClubs():
@@ -16,6 +23,7 @@ def loadCompetitions():
 
 
 app = Flask(__name__)
+import errors
 app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
@@ -24,6 +32,7 @@ clubs = loadClubs()
 
 @app.route('/')
 def index():
+    abort(500)
     return render_template('index.html', clubs=clubs)
 
 
@@ -65,9 +74,18 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
-    competition = [c for c in competitions if c['name']
-                   == request.form['competition']][0]
-    club = [c for c in clubs if c['name'] == request.form['club']][0]
+    try:
+        competition = [c for c in competitions if c['name']
+                       == request.form['competition']][0]
+    except IndexError:
+        # if not found we raise an internal server error
+        abort(500)
+    
+    try:
+        club = [c for c in clubs if c['name'] == request.form['club']][0]
+    except IndexError:
+        # if not found we raise an internal server error
+        abort(500)
 
     places_required = int(request.form['places'])
     places_available = int(competition['numberOfPlaces'])
