@@ -9,4 +9,5 @@ def not_found_error(error):
 
 @app.errorhandler(500)
 def internal_error(error):
-    return render_template('500.html'), 500
+    custom_message = error.description
+    return render_template('500.html', custom_message=custom_message), 500

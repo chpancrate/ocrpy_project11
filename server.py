@@ -1,4 +1,5 @@
 import json
+import sys
 from datetime import datetime
 from flask import (Flask,
                    render_template,
@@ -9,17 +10,27 @@ from flask import (Flask,
                    abort)
 
 
-
 def loadClubs():
-    with open('clubs.json') as c:
-        listOfClubs = json.load(c)['clubs']
-        return listOfClubs
+    try:
+        with open('clubs.json') as clubs_file:
+            list_of_clubs = json.load(clubs_file)['clubs']
+    except FileNotFoundError:
+        list_of_clubs = []
+    except json.JSONDecodeError:
+        list_of_clubs = []
+
+    return list_of_clubs
 
 
 def loadCompetitions():
-    with open('competitions.json') as comps:
-        listOfCompetitions = json.load(comps)['competitions']
-        return listOfCompetitions
+    try:
+        with open('competitions.json') as competitions_file:
+            list_of_competitions = json.load(competitions_file)['competitions']
+    except FileNotFoundError:
+        list_of_competitions = []
+    except json.JSONDecodeError:
+        list_of_competitions = []
+    return list_of_competitions
 
 
 app = Flask(__name__)
@@ -32,6 +43,8 @@ clubs = loadClubs()
 
 @app.route('/')
 def index():
+    if clubs == [] or competitions == []:
+        abort(500, description="json files missing or empty")
     return render_template('index.html', clubs=clubs)
 
 
@@ -90,7 +103,7 @@ def purchasePlaces():
     except IndexError:
         # if not found we raise an internal server error
         abort(500)
-    
+
     try:
         club = [c for c in clubs if c['name'] == request.form['club']][0]
     except IndexError:
