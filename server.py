@@ -32,13 +32,14 @@ def loadCompetitions():
     return list_of_competitions
 
 
+competitions = loadCompetitions()
+clubs = loadClubs()
+
+
 def create_app():
     print("start app")
     app = Flask(__name__)
     app.config.from_object("config")
-
-    competitions = loadCompetitions()
-    clubs = loadClubs()
 
     @app.errorhandler(404)
     def not_found_error(error):
