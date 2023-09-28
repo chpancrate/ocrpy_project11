@@ -6,7 +6,14 @@
 </head>
 <body>
     <h2>{{competition['name']}}</h2>
-    Places available: {{competition['numberOfPlaces']}}
+    <form action="/showSummary" method="post">
+        <input type="hidden" name="email" value="{{club['email']}}">
+        <button type="submit">Return to list</button>
+    </form>
+    <p>
+        <span style="margin: 10px">Places available: {{competition['numberOfPlaces']}}</span>
+        <span style="margin: 10px">Points available: {{club['points']}}</span>
+    </p>
 
     {% with messages = get_flashed_messages()%}
     <form action="/purchasePlaces" method="post">

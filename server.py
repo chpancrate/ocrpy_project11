@@ -93,9 +93,11 @@ def create_app():
             abort(404)
 
         if foundClub and foundCompetition:
+            previous_url = request.referrer
             return render_template('booking.html',
                                    club=foundClub,
-                                   competition=foundCompetition)
+                                   competition=foundCompetition,
+                                   previous_url=previous_url)
         else:
             flash("Something went wrong-please try again")
             return render_template('welcome.html',
