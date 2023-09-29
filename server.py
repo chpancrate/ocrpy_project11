@@ -77,7 +77,9 @@ def create_app():
     def index():
         if clubs == [] or competitions == []:
             abort(500, description="json files missing or empty")
-        return render_template('index.html', clubs=clubs)
+        sorted_clubs = sorted(clubs, key=lambda x: x['name'])
+        clubs_mini_board = sorted_clubs[:10]
+        return render_template('index.html', clubs=clubs_mini_board)
 
     @app.route('/showSummary', methods=['POST'])
     def showSummary():
@@ -98,7 +100,7 @@ def create_app():
                                    competitions=competitions)
         except IndexError:
             flash("Unknown email")
-            return render_template('index.html')
+            return redirect(url_for('index'))
 
     @app.route('/book/<competition>/<club>')
     def book(competition, club):
@@ -174,6 +176,13 @@ def create_app():
         return render_template('welcome.html',
                                club=club,
                                competitions=competitions)
+
+    @app.route('/board')
+    def board():
+        if clubs == [] or competitions == []:
+            abort(500, description="json files missing or empty")
+        sorted_clubs = sorted(clubs, key=lambda x: x['name'])
+        return render_template('board.html', clubs=sorted_clubs)
 
     @app.route('/logout')
     def logout():

@@ -1,1 +1,94 @@
-{"clubs": [{"name": "Simply Lift", "email": "john@simplylift.co", "points": 12}, {"name": "Iron Temple", "email": "admin@irontemple.com", "points": "4"}, {"name": "She Lifts", "email": "kate@shelifts.co.uk", "points": "12"}]}
+{
+    "clubs": [
+        {
+            "name": "Simply Lift",
+            "email": "john@simplylift.co",
+            "points": "15"
+        },
+        {
+            "name": "Iron Temple",
+            "email": "admin@irontemple.com",
+            "points": "4"
+        },
+        {
+            "name": "She Lifts",
+            "email": "kate@shelifts.co.uk",
+            "points": "12"
+        },
+        {
+            "name": "Aklon Weightlifting",
+            "email": "aklon.weightlifting@mail.com",
+            "points": "5"
+        },
+        {
+            "name": "Bears Lifting",
+            "email": "bearslifting@omail.com",
+            "points": "17"
+        },
+        {
+            "name": "Hills Barbell Club",
+            "email": "ness@clanshred.com.au",
+            "points": "11"
+        },
+        {
+            "name": "House of Chaos Weightlifting",
+            "email": "secretary@kawstrength.com.au",
+            "points": "1"
+        },
+        {
+            "name": "Katoomba Blue Mountains Weightlifting Club",
+            "email": "secretary@crossfitmarrickville.au",
+            "points": "8"
+        },
+        {
+            "name": "Sydney High Weightlifting Club",
+            "email": "secretary@thefunctionaleffect.com",
+            "points": "13"
+        },
+        {
+            "name": "American Strength",
+            "email": "johny@amstrength.co",
+            "points": "17"
+        },
+        {
+            "name": "Barbarian Powerlifting",
+            "email": "admin@barbarian.com",
+            "points": "14"
+        },
+        {
+            "name": "Cleveland Powerlifting Club",
+            "email": "cathy@clevpowerlift.com",
+            "points": "12"
+        },
+        {
+            "name": "Elk Mound High School Powerlifting",
+            "email": "ted@elkmounthigh.edu",
+            "points": "5"
+        },
+        {
+            "name": "Fresno State Powerlifting",
+            "email": "secretary@fresnopl.com",
+            "points": "16"
+        },
+        {
+            "name": "Hawai Powerlifting Club",
+            "email": "noa@hawaiplc.usa",
+            "points": "2"
+        },
+        {
+            "name": "Kaos Crew",
+            "email": "jennyfer@kaosc.co",
+            "points": "15"
+        },
+        {
+            "name": "Ottawa University",
+            "email": "powerlift@ottawa-university.ca",
+            "points": "3"
+        },
+        {
+            "name": "Yoddha Training",
+            "email": "joe@yoddhalift.tx",
+            "points": "16"
+        }
+    ]
+}
