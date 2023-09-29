@@ -11,3 +11,4 @@ __pycache__
 .flaskenv
 Pipfile
 Pipfile.lock
+/json files

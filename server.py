@@ -8,10 +8,13 @@ from flask import (Flask,
                    url_for,
                    abort)
 
+CLUBS_JSON_FILE_NAME = 'clubs.json'
+COMPETITIONS_JSON_FILE_NAME = 'competitions.json'
+
 
 def loadClubs():
     try:
-        with open('clubs.json') as clubs_file:
+        with open(CLUBS_JSON_FILE_NAME) as clubs_file:
             list_of_clubs = json.load(clubs_file)['clubs']
     except FileNotFoundError:
         list_of_clubs = []
@@ -23,7 +26,7 @@ def loadClubs():
 
 def loadCompetitions():
     try:
-        with open('competitions.json') as competitions_file:
+        with open(COMPETITIONS_JSON_FILE_NAME) as competitions_file:
             list_of_competitions = json.load(competitions_file)['competitions']
     except FileNotFoundError:
         list_of_competitions = []
@@ -32,12 +35,32 @@ def loadCompetitions():
     return list_of_competitions
 
 
+def save_clubs(clubs_list):
+    try:
+        with open(CLUBS_JSON_FILE_NAME, 'w') as club_file:
+            clubs_file_content = {}
+            clubs_file_content["clubs"] = clubs_list
+            json.dump(clubs_file_content, club_file)
+    except Exception:
+        abort(500, description="cannot write clubs file")
+
+
+def save_competitions(competitions_list):
+    try:
+        with open(COMPETITIONS_JSON_FILE_NAME, 'w') as competitions_file:
+            competitions_file_content = {}
+            competitions_file_content["competitions"] = competitions_list
+            json.dump(competitions_file_content, competitions_file)
+    except Exception:
+        abort(500, description="cannot write competitions file")
+
+
 competitions = loadCompetitions()
 clubs = loadClubs()
 
 
 def create_app():
-    print("start app")
+
     app = Flask(__name__)
     app.config.from_object("config")
 
@@ -61,12 +84,12 @@ def create_app():
         try:
             club = [club for club in clubs if club['email']
                     == request.form['email']][0]
-            print("XXX-today", datetime.now())
 
-            for competition in competitions:
+            competitions_list = competitions.copy()
+            # add a flag to tell that the competition is in the past
+            for competition in competitions_list:
                 competition_date = datetime.strptime(competition['date'],
-                                                    "%Y-%m-%d %H:%M:%S")
-                print("XXX-comp date", competition_date)
+                                                     "%Y-%m-%d %H:%M:%S")
                 competition['is_not_in_past'] = (
                     datetime.now() < competition_date)
 
@@ -142,6 +165,10 @@ def create_app():
         competition['numberOfPlaces'] = (int(competition['numberOfPlaces'])
                                          - places_required)
         club['points'] = int(club['points']) - places_required
+
+        save_clubs(clubs)
+        save_competitions(competitions)
+
         flash('Great-booking complete!')
 
         return render_template('welcome.html',

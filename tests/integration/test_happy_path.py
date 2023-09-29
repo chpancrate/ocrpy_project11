@@ -11,7 +11,8 @@ def test_user_happy_path(client):
     booking_data = {"club": "Test Name 1",
                     "competition": "Test competition 1",
                     "places": "10"}
-
+    loadClubs
+    loadcompetition()
     # go to the index page
     client.get('/')
     # connect to the application

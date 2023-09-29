@@ -1,4 +1,5 @@
 import server
+import json
 
 
 def test_purchasePlaces_with_correct_values(client,
@@ -22,14 +23,18 @@ def test_purchasePlaces_with_correct_values(client,
     mocker.patch.object(server, "clubs", clubs_fix)
     mocker.patch.object(server, "competitions", competitions_fix)
 
+    # mock the jso file name to use test files
+    mocker.patch.object(server,
+                        "COMPETITIONS_JSON_FILE_NAME",
+                        'competitions_test.json')
+    mocker.patch.object(server, "CLUBS_JSON_FILE_NAME", 'clubs_test.json')
+
     post_data = {"club": "Test Name 1",
                  "competition": "Competition 1",
                  "places": "1"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
-
-    # print(response_data)
 
     # the page displayed is the summary
     assert "Welcome, test@email1.com" in response_data
@@ -72,8 +77,6 @@ def test_purchasePlaces_with_places_required_gt_available_points(
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    # print(response_data)
-
     # the page displayed is the booking page
     assert "How many places?" in response_data
     # an error message is displayed
@@ -108,8 +111,6 @@ def test_purchasePlaces_with_places_required_gt_12(
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
-
-    # print(response_data)
 
     # the page displayed is the booking page
     assert "How many places?" in response_data
@@ -146,8 +147,6 @@ def test_purchasePlaces_with_places_required_gt_available_places(
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    # print(response_data)
-
     # the page displayed is the booking page
     assert "How many places?" in response_data
     # an error message is dispalyed
@@ -183,8 +182,6 @@ def test_purchasePlaces_with_wrong_club(
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    # print(response_data)
-
     # the error 500 page is displayed
     assert "<h1>An internal server error occured</h1>" in response_data
 
@@ -218,7 +215,52 @@ def test_purchasePlaces_with_wrong_competition(
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
 
-    # print(response_data)
-
     # the error 500 page is displayed
     assert "<h1>An internal server error occured</h1>" in response_data
+
+
+def test_purchasePlaces_write_in_json_files(client,
+                                            clubs_fix,
+                                            competitions_fix,
+                                            mocker):
+    """
+    GIVEN that you enter :
+        -ok- a number of place required <= your available points
+        -ok- a number of place required <= 12
+        -ok- a number of place required <= the available places in competition
+        and that the club and competition hidden field are correct
+    WHEN you send the request
+    THEN the place are booked
+    """
+    # data from club and competition comes from json test files
+    # club initial points : 15
+    # competition initial places : 25
+
+    # mock of the club and competition lists
+    mocker.patch.object(server, "clubs", clubs_fix)
+    mocker.patch.object(server, "competitions", competitions_fix)
+
+    # mock the jso file name to use test files
+    mocker.patch.object(server,
+                        "COMPETITIONS_JSON_FILE_NAME",
+                        'competitions_test.json')
+    mocker.patch.object(server, "CLUBS_JSON_FILE_NAME", 'clubs_test.json')
+
+    post_data = {"club": "Test Name 1",
+                 "competition": "Competition 1",
+                 "places": "1"}
+
+    client.post('/purchasePlaces', data=post_data)
+
+    with open('clubs_test.json') as clubs_test_file:
+        saved_clubs = json.load(clubs_test_file)['clubs']
+
+    with open('competitions_test.json') as competitions_test_file:
+        saved_competitions = json.load(competitions_test_file)['competitions']
+
+    result_club = [c for c in saved_clubs if c['name'] == "Test Name 1"][0]
+    result_competition = [c for c in saved_competitions
+                          if c['name'] == "Competition 1"][0]
+
+    assert result_club['points'] == 14
+    assert result_competition['numberOfPlaces'] == 24
