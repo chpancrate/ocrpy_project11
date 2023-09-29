@@ -39,7 +39,9 @@ def test_showSummary_with_invalid_email(client,
 
     post_data = {"email": "errorTest@email1.com"}
 
-    response = client.post('/showSummary', data=post_data)
+    response = client.post('/showSummary',
+                           data=post_data,
+                           follow_redirects=True)
     response_data = response.data.decode()
 
     assert "Unknown email" in response_data
