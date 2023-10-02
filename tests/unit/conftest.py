@@ -17,17 +17,27 @@ def clubs_fix():
         {
             "name": "Test Name 1",
             "email": "test@email1.com",
-            "points": "15"
+            "points": "15",
+            "reservations": []
+
         },
         {
             "name": "Test Name 2",
             "email": "test@email1.com",
-            "points": "4"
+            "points": "4",
+            "reservations": []
         },
         {
             "name": "Test Name 3",
             "email": "test@email3.com",
-            "points": "12"
+            "points": "12",
+            "reservations": [
+                {
+                    "competition": "Competition 3",
+                    "places": 2
+                }
+            ]
+
         }
     ]
 

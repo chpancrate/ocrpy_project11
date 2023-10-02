@@ -91,23 +91,23 @@ def test_purchasePlaces_with_places_required_gt_12(
     """
     GIVEN that you enter :
         -ok- a number of place required <= your available points
-        -Er- a number of place required > 12
+        -Er- a number of place required + place already booked > 12
         -ok- a number of place required <= the available places in competition
         and that the club and competition hidden field are correct
     WHEN you send the request
     THEN an error message is displayed
     """
     # data from club and competition comes from json test files
-    # club initial points : 14
-    # competition initial places : 24
+    # club initial points : 12
+    # competition initial places : 20
 
     # mock of the club and competition lists
     mocker.patch.object(server, "clubs", clubs_fix)
     mocker.patch.object(server, "competitions", competitions_fix)
 
-    post_data = {"club": "Test Name 1",
-                 "competition": "Competition 1",
-                 "places": "13"}
+    post_data = {"club": "Test Name 3",
+                 "competition": "Competition 3",
+                 "places": "11"}
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()

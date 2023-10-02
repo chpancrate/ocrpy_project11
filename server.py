@@ -7,6 +7,7 @@ from flask import (Flask,
                    flash,
                    url_for,
                    abort)
+import copy
 
 CLUBS_JSON_FILE_NAME = 'clubs.json'
 COMPETITIONS_JSON_FILE_NAME = 'competitions.json'
@@ -55,6 +56,23 @@ def save_competitions(competitions_list):
         abort(500, description="cannot write competitions file")
 
 
+def competitions_list_rework(competitions_param):
+
+    competitions_list = copy.deepcopy(competitions_param)
+    # add a flag to tell that the competition is in the past
+    sorted_competitions = sorted(competitions_list,
+                                 key=lambda x: x['date'],
+                                 reverse=True)
+    for competition in sorted_competitions:
+        competition_date = datetime.strptime(competition['date'],
+                                             "%Y-%m-%d %H:%M:%S")
+        competition['is_not_in_past'] = (
+            datetime.now() < competition_date)
+        competition['date'] = competition_date.strftime("%d %B %Y, %H:%M")
+
+    return sorted_competitions
+
+
 competitions = loadCompetitions()
 clubs = loadClubs()
 
@@ -87,17 +105,11 @@ def create_app():
             club = [club for club in clubs if club['email']
                     == request.form['email']][0]
 
-            competitions_list = competitions.copy()
-            # add a flag to tell that the competition is in the past
-            for competition in competitions_list:
-                competition_date = datetime.strptime(competition['date'],
-                                                     "%Y-%m-%d %H:%M:%S")
-                competition['is_not_in_past'] = (
-                    datetime.now() < competition_date)
+            sorted_competitions = competitions_list_rework(competitions)
 
             return render_template('welcome.html',
                                    club=club,
-                                   competitions=competitions)
+                                   competitions=sorted_competitions)
         except IndexError:
             flash("Unknown email")
             return redirect(url_for('index'))
@@ -117,12 +129,21 @@ def create_app():
             # if not found we raise a page not found error
             abort(404)
 
+        reservations = foundClub['reservations']
+        try:
+            club_reservation = [resa for resa in reservations
+                                if resa['competition'] == competition][0]
+            reserved_places = int(club_reservation['places'])
+        except IndexError:
+            reserved_places = 0
+
         if foundClub and foundCompetition:
             previous_url = request.referrer
             return render_template('booking.html',
                                    club=foundClub,
                                    competition=foundCompetition,
-                                   previous_url=previous_url)
+                                   previous_url=previous_url,
+                                   reserved_places=reserved_places)
         else:
             flash("Something went wrong-please try again")
             return render_template('welcome.html',
@@ -144,38 +165,66 @@ def create_app():
             # if not found we raise an internal server error
             abort(500)
 
+        reservations = club['reservations']
+        try:
+            club_reservation = [resa for resa in reservations
+                                if (resa['competition']
+                                    == competition['name'])][0]
+            reserved_places = int(club_reservation['places'])
+            already_reserved = True
+        except IndexError:
+            reserved_places = 0
+            already_reserved = False
+
         places_required = int(request.form['places'])
         places_available = int(competition['numberOfPlaces'])
         club_points = int(club['points'])
+
+        total_places = places_required + reserved_places
 
         if places_required > club_points:
             flash("You do not have enough points.")
             return render_template('booking.html',
                                    club=club,
-                                   competition=competition)
-        elif places_required > 12:
+                                   competition=competition,
+                                   reserved_places=reserved_places)
+        elif total_places > 12:
             flash("You cannot book more than 12 places.")
             return render_template('booking.html',
                                    club=club,
-                                   competition=competition)
+                                   competition=competition,
+                                   reserved_places=reserved_places)
         elif places_required > places_available:
             flash("There is not enough places in the competition.")
             return render_template('booking.html',
                                    club=club,
-                                   competition=competition)
+                                   competition=competition,
+                                   reserved_places=reserved_places)
 
         competition['numberOfPlaces'] = (int(competition['numberOfPlaces'])
                                          - places_required)
         club['points'] = int(club['points']) - places_required
+
+        if already_reserved:
+            # if places were already reserved we update the record
+            club_reservation['places'] = total_places
+        else:
+            # else we create a record
+            reservations.append({
+                "competition": competition['name'],
+                "places": total_places
+            })
 
         save_clubs(clubs)
         save_competitions(competitions)
 
         flash('Great-booking complete!')
 
+        sorted_competitions = competitions_list_rework(competitions)
+
         return render_template('welcome.html',
                                club=club,
-                               competitions=competitions)
+                               competitions=sorted_competitions)
 
     @app.route('/board')
     def board():
