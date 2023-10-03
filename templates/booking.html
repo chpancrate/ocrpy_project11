@@ -1,35 +1,52 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking for {{ competition['name'] }} || GUDLFT</title>
-</head>
-<body>
-    <h2>{{competition['name']}}</h2>
-    <form action="/showSummary" method="post">
-        <input type="hidden" name="email" value="{{club['email']}}">
-        <button type="submit">Return to list</button>
-    </form>
-    <p>
-        <span style="margin: 10px">Places available: {{ competition['numberOfPlaces'] }}</span>
-        <span style="margin: 10px">Points available: {{ club['points'] }}</span>
-        <span style="margin: 10px">Places already reserved: {{ reserved_places }}</span>
-    </p>
+{% extends 'base.html' %}
 
-    {% with messages = get_flashed_messages() %}
-    <form action="/purchasePlaces" method="post">
-        <input type="hidden" name="club" value="{{club['name']}}">
-        <input type="hidden" name="competition" value="{{competition['name']}}">
-        <label for="places">How many places?</label><input type="number" name="places" id=""/>
-        <button type="submit">Book</button>
-    </form>
-    {% if messages %}
-    <ul>
+{% block content %}
+<div class="row text-center">
+    <div class="col">
+        <h2>{{competition['name']}}</h2>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-center">
+    <div class="col text-center">
+        <form action="/showSummary" method="post">
+            <input type="hidden" name="email" value="{{club['email']}}">
+            <button class="btn btn-link" type="submit">Return to list</button>
+        </form>
+    </div>
+</div>
+<div class="row text-center d-flex justify-content-center">
+    <div class="col-2">
+        Places available: {{ competition['numberOfPlaces'] }}
+    </div>
+    <div class="col-2">
+        Points available: {{ club['points'] }}
+    </div>
+    <div class="col-3">
+        Places already reserved: {{ reserved_places }}
+    </div>
+</div>
+{% with messages = get_flashed_messages() %}
+<div class="row mt-3 d-flex justify-content-center">
+    <div class="col-2">
+
+        <form action="/purchasePlaces" method="post">
+            <input type="hidden" name="club" value="{{club['name']}}">
+            <input type="hidden" name="competition" value="{{competition['name']}}">
+            <label for="places" class="form-label">How many places?</label><input type="number" class="form-control" name="places" id="" min="1"/>
+            <button type="submit" class="btn btn-primary mt-2">Book</button>
+        </form>
+    </div>
+</div>
+{% if messages %}
+<div class="row mt-3 d-flex justify-content-center">
+    <div class="col-7">
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <p class="alert alert-danger">{{ message }}</p>
         {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-</body>
-</html>
+    </div>
+</div>
+{% endif %}
+{% endwith %}
+
+{% endblock %}

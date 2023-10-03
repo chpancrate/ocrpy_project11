@@ -1,43 +1,63 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary | GUDLFT Registration</title>
-</head>
-<body>
-        <h2>Welcome, {{club['email']}} </h2><a href="{{url_for('logout')}}">Logout</a>
+{% extends 'base.html' %}
 
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    Points available: {{club['points']}}
-    <h3>Competitions:</h3>
-    <table style="border-spacing: 10px">
-        {% for comp in competitions%}
-        <tr>
-            <td>
-                {{comp['name']}}<br />
-            </td>
-            <td>
-                Date: {{comp['date']}}</br>
-            </td>
-            <td>
-                Number of Places: {{comp['numberOfPlaces']}}
-            </td>
-            <td>
-                {%if comp['numberOfPlaces']|int >0 and comp.is_not_in_past %}
-                <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places</a>
-                {%endif%}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {%endwith%}
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-7">
+        <h2>Welcome, {{club['email']}} </h2>
+    </div>
+    <div class="col-4 d-flex justify-content-end">
+        <a href="{{url_for('logout')}}">Logout</a>
+    </div>
+</div>
+{% with messages = get_flashed_messages()%}
+{% if messages %}
+<div class="row">
+    <div class="col-7">
+    {% for message in messages %}
+        <p class="alert alert-success">{{ message }}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endif%}
+<div class="row">
+    <div class="col-7">
+        <h5 class="my-4">Points available: {{club['points']}}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-11">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Competition</td>
+                    <th>Date</th>
+                    <th class="text-center">Number of places</td>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comp in competitions%}
+                <tr>
+                    <td>
+                        {{comp['name']}}
+                    </td>
+                    <td>
+                        {{comp['date']}}
+                    </td>
+                    <td class="text-center">
+                        {{comp['numberOfPlaces']}}
+                    </td>
+                    <td>
+                        {%if comp['numberOfPlaces']|int >0 and comp.is_not_in_past %}
+                        <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places</a>
+                        {%endif%}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endwith%}
 
-</body>
-</html>
+{% endblock %}l>

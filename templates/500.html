@@ -1,12 +1,15 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
-</head>
-<body>
-    <h1>An internal server error occured</h1>
-    <p>{{ custom_message }}</p>
-    please log again <a href="{{url_for('index')}}">Home Page</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row text-center mt-4 d-flex align-items-center">
+    <div class="col-7">
+        <h1>An internal server error occured</h1>
+        {% if custom_message %}
+        <div class="alert alert-danger">
+            <p>{{ custom_message }}</p>
+        </div>
+        {% endif %}
+        please log again <a href="{{url_for('index')}}">Home Page</a>
+    </div>
+</div>
+{% endblock %}

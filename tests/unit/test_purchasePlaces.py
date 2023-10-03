@@ -35,17 +35,21 @@ def test_purchasePlaces_with_correct_values(client,
 
     response = client.post('/purchasePlaces', data=post_data)
     response_data = response.data.decode()
-
+    competition = [c for c in competitions_fix if c['name']
+                   == "Competition 1"][0]
+    club = [c for c in clubs_fix if c['name']
+            == "Test Name 1"][0]
+    print("XXX", competition)
     # the page displayed is the summary
     assert "Welcome, test@email1.com" in response_data
     # a message is displayed to assert booking
     assert "Great-booking complete!" in response_data
     # number of available points should be initial - booked places:
     # 15 - 1 = 14
-    assert "Points available: 14" in response_data
+    assert club['points'] == 14
     # number of remaining places should be initial - booked places:
     # 25 - 1 = 24
-    assert "Number of Places: 24" in response_data
+    assert competition['numberOfPlaces'] == 24
 
 
 def test_purchasePlaces_with_places_required_gt_available_points(

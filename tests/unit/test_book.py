@@ -78,7 +78,7 @@ def test_book_page_with_full_data(clubs_fix,
     assert "Competition 1" in response_data
     assert "Places available: 25" in response_data
     assert "Points available: 15" in response_data
-    assert "<button type=\"submit\">Return to list</button>" in response_data
+    assert "Return to list" in response_data
 
 
 def test_book_page_places_already_purchased(clubs_fix,

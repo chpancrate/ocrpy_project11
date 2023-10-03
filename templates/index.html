@@ -1,40 +1,55 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
-</head>
-<body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    Please enter your secretary email to book places:
-    {% with messages = get_flashed_messages() %}
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
-    </form>
+{% extends 'base.html' %}
 
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-       </ul>
-    {% endif %}
-    {% endwith %}
+{% block content %}
 
-    <table style="border-spacing: 10px">
-        <tr>
-            <th>Clubs</td>
-            <th>Points</td>
-        </tr>
-        {% for club in clubs %}
-        <tr>
-            <td>{{ club['name'] }}</td>
-            <td style="text-align: center">{{ club['points'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p><a href="{{ url_for('board') }}">view more</a></p>
-</body>
-</html>
+<div class="row text-center mt-4">
+    <div class="col">
+        <h1>Welcome to the GUDLFT Registration Portal!</h1>
+    </div>
+</div>
+<div class="row text-center mt-4 d-flex justify-content-center">
+    <div class="col-6">
+        Please enter your secretary email to book places:
+        {% with messages = get_flashed_messages() %}
+
+        <form action="showSummary" method="post">
+            <input class="form-control mt-2" type="email" name="email" id=""/>
+            <button class="btn btn-primary mt-2" type="submit">Enter</button>
+        </form>
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+                <p class="alert alert-danger">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+<div class="row justify-content-center mt-4">
+    <div class="col-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Clubs</td>
+                        <th class="text-center">Points</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for club in clubs %}
+                    <tr>
+                        <td>{{ club['name'] }}</td>
+                        <td class="text-center">{{ club['points'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col">
+        <p><a href="{{ url_for('board') }}">view more</a></p>
+    </div>
+</div>
+
+{% endblock %}

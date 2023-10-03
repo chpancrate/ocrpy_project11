@@ -9,6 +9,7 @@ from flask import (Flask,
                    abort)
 import copy
 
+
 CLUBS_JSON_FILE_NAME = 'clubs.json'
 COMPETITIONS_JSON_FILE_NAME = 'competitions.json'
 

@@ -1,11 +1,10 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
-</head>
-<body>
-    <h1>Page not found</h1>
-    please log again <a href="{{url_for('index')}}">Home Page</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row text-center mt-4">
+    <div class="col">
+        <h1>Page not found</h1>
+        Please log again <a href="{{url_for('index')}}">Home Page</a>
+    </div>
+</div>
+{% endblock %}
