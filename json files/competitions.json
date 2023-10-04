@@ -1,0 +1,64 @@
+{
+    "competitions": [
+        {
+            "name": "Spring Festival",
+            "date": "2024-03-27 10:00:00",
+            "numberOfPlaces": "25"
+        },
+        {
+            "name": "Fall Classic",
+            "date": "2023-10-22 13:30:00",
+            "numberOfPlaces": "7"
+        },
+        {
+            "name": "Summer Beach Festival",
+            "date": "2023-07-22 14:30:00",
+            "numberOfPlaces": "20"
+        },
+        {
+            "name": "Powerlifting California State Championships",
+            "date": "2024-04-2 09:00:00",
+            "numberOfPlaces": "30"
+        },
+        {
+            "name": "Mississippi State Championship",
+            "date": "2023-11-23 11:30:00",
+            "numberOfPlaces": "27"
+        },
+        {
+            "name": "Arizona Fall Classic",
+            "date": "2023-10-12 18:30:00",
+            "numberOfPlaces": "19"
+        },
+        {
+            "name": "Holiday Havoc",
+            "date": "2024-01-25 11:00:00",
+            "numberOfPlaces": "43"
+        },
+        {
+            "name": "TruBorn Rookie Rumble",
+            "date": "2023-11-12 13:30:00",
+            "numberOfPlaces": "29"
+        },
+        {
+            "name": "Battle at Vicksburg",
+            "date": "2023-04-22 15:30:00",
+            "numberOfPlaces": "20"
+        },
+        {
+            "name": "Tacoma Rookie Competition",
+            "date": "2024-09-27 10:30:00",
+            "numberOfPlaces": "35"
+        },
+        {
+            "name": "Australia Elemental Strength Summer Showdown",
+            "date": "2023-11-22 12:30:00",
+            "numberOfPlaces": "17"
+        },
+        {
+            "name": "Virginia Shamrock Showdown",
+            "date": "2023-06-22 14:30:00",
+            "numberOfPlaces": "23"
+        }
+    ]
+}

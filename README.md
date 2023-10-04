@@ -49,5 +49,7 @@
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
 
-    Remark : In order to be able to run the tests created in the /test directory you must launch them from the directory where they are located. This will enable the application to use the tests files located in the directory. 
+    * Integration Testing
+
+    In order to run the test you need to copy the clubs_test.json and competitions_test.json located in ./json files/ in the directory ./tests/integration/. This ensure you use proper data. As the test modify the files it has to be done before each test. 
 

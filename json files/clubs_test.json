@@ -1,0 +1,117 @@
+{
+    "clubs": [
+        {
+            "name": "Simply Lift XXX",
+            "email": "john@simplylift.co",
+            "points": "15",
+            "reservations": []
+        },
+        {
+            "name": "Iron Temple",
+            "email": "admin@irontemple.com",
+            "points": "4",
+            "reservations": []
+        },
+        {
+            "name": "She Lifts",
+            "email": "kate@shelifts.co.uk",
+            "points": "12",
+            "reservations": [
+                {
+                    "competition": "Spring Festival",
+                    "places": 2
+                }
+            ]
+        },
+        {
+            "name": "Aklon Weightlifting IntegTest",
+            "email": "aklon.IntegTest@mail.com",
+            "points": 15,
+            "reservations": []
+        },
+        {
+            "name": "Bears Lifting",
+            "email": "bearslifting@omail.com",
+            "points": "17",
+            "reservations": []
+        },
+        {
+            "name": "Hills Barbell Club",
+            "email": "ness@clanshred.com.au",
+            "points": "11",
+            "reservations": []
+        },
+        {
+            "name": "House of Chaos Weightlifting",
+            "email": "secretary@kawstrength.com.au",
+            "points": "1",
+            "reservations": []
+        },
+        {
+            "name": "Katoomba Blue Mountains Weightlifting Club",
+            "email": "secretary@crossfitmarrickville.au",
+            "points": "8",
+            "reservations": []
+        },
+        {
+            "name": "Sydney High Weightlifting Club",
+            "email": "secretary@thefunctionaleffect.com",
+            "points": "13",
+            "reservations": []
+        },
+        {
+            "name": "American Strength",
+            "email": "johny@amstrength.co",
+            "points": "17",
+            "reservations": []
+        },
+        {
+            "name": "Barbarian Powerlifting",
+            "email": "admin@barbarian.com",
+            "points": "14",
+            "reservations": []
+        },
+        {
+            "name": "Cleveland Powerlifting Club",
+            "email": "cathy@clevpowerlift.com",
+            "points": "12",
+            "reservations": []
+        },
+        {
+            "name": "Elk Mound High School Powerlifting",
+            "email": "ted@elkmounthigh.edu",
+            "points": "5",
+            "reservations": []
+        },
+        {
+            "name": "Fresno State Powerlifting",
+            "email": "secretary@fresnopl.com",
+            "points": "16",
+            "reservations": []
+        },
+        {
+            "name": "Hawai Powerlifting Club",
+            "email": "noa@hawaiplc.usa",
+            "points": "2",
+            "reservations": []
+        },
+        {
+            "name": "Kaos Crew",
+            "email": "jennyfer@kaosc.co",
+            "points": "15",
+            "reservations": []
+        },
+        {
+            "name": "Ottawa University",
+            "email": "powerlift@ottawa-university.ca",
+            "points": "3",
+            "reservations": []
+        },
+        {
+            "name": "Yoddha Training",
+            "email": "joe@yoddhalift.tx",
+            "points": "16",
+            "reservations": []
+        }
+    ]
+}
