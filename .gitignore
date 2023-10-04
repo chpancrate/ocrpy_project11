@@ -12,3 +12,4 @@ __pycache__
 Pipfile
 Pipfile.lock
 #/json files
+.coverage
