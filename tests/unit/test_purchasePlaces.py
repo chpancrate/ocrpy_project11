@@ -39,7 +39,7 @@ def test_purchasePlaces_with_correct_values(client,
                    == "Competition 1"][0]
     club = [c for c in clubs_fix if c['name']
             == "Test Name 1"][0]
-    print("XXX", competition)
+
     # the page displayed is the summary
     assert "Welcome, test@email1.com" in response_data
     # a message is displayed to assert booking
@@ -268,3 +268,61 @@ def test_purchasePlaces_write_in_json_files(client,
 
     assert result_club['points'] == 14
     assert result_competition['numberOfPlaces'] == 24
+
+
+def test_purchasePlaces_with_places_already_reserved(client,
+                                                     clubs_fix,
+                                                     competitions_fix,
+                                                     mocker):
+    """
+    GIVEN that places are already reserved and that you enter :
+        -ok- a number of place required <= your available points
+        -ok- a number of place required <= 12 - places already reserved
+        -ok- a number of place required <= the available places in competition
+        and that the club and competition hidden field are correct
+    WHEN you send the request
+    THEN the places are booked and the total places is correct
+    """
+    # data from club and competition comes from json test files
+    # club initial points : 12
+    # places already reserved : 2
+    # competition initial places : 20
+
+    # mock of the club and competition lists
+    mocker.patch.object(server, "clubs", clubs_fix)
+    mocker.patch.object(server, "competitions", competitions_fix)
+
+    # mock the jso file name to use test files
+    mocker.patch.object(server,
+                        "COMPETITIONS_JSON_FILE_NAME",
+                        'competitions_test.json')
+    mocker.patch.object(server, "CLUBS_JSON_FILE_NAME", 'clubs_test.json')
+
+    post_data = {"club": "Test Name 3",
+                 "competition": "Competition 3",
+                 "places": "2"}
+
+    response = client.post('/purchasePlaces', data=post_data)
+    response_data = response.data.decode()
+    competition = [c for c in competitions_fix if c['name']
+                   == "Competition 3"][0]
+    club = [c for c in clubs_fix if c['name']
+            == "Test Name 3"][0]
+    reservations = club['reservations']
+    club_reservation = [resa for resa in reservations
+                        if (resa['competition']
+                            == "Competition 3")][0]
+    # the page displayed is the summary
+    assert "Welcome, test@email3.com" in response_data
+    # a message is displayed to assert booking
+    assert "Great-booking complete!" in response_data
+    # number of available points should be initial - booked places:
+    # 12 - 2 = 10
+    assert club['points'] == 10
+    # total number of places reserved should be equal to
+    # already reserved + booked places
+    # 2 + 2 = 4
+    assert club_reservation['places'] == 4
+    # number of remaining places should be initial - booked places:
+    # 20 - 2 = 18
+    assert competition['numberOfPlaces'] == 18

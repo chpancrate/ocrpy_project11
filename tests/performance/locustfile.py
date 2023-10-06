@@ -24,6 +24,10 @@ class ProjectPerfTest(HttpUser):
                         "places": "10"}
         self.client.post('/purchasePlaces', data=booking_data)
 
+    @task()
+    def board(self):
+        self.client.get('/board')
+
     @task
     def logout(self):
         self.client.get('/logout')

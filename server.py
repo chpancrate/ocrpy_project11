@@ -138,18 +138,10 @@ def create_app():
         except IndexError:
             reserved_places = 0
 
-        if foundClub and foundCompetition:
-            previous_url = request.referrer
-            return render_template('booking.html',
-                                   club=foundClub,
-                                   competition=foundCompetition,
-                                   previous_url=previous_url,
-                                   reserved_places=reserved_places)
-        else:
-            flash("Something went wrong-please try again")
-            return render_template('welcome.html',
-                                   club=club,
-                                   competitions=competitions)
+        return render_template('booking.html',
+                               club=foundClub,
+                               competition=foundCompetition,
+                               reserved_places=reserved_places)
 
     @app.route('/purchasePlaces', methods=['POST'])
     def purchasePlaces():
