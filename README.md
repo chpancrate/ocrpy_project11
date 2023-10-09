@@ -74,7 +74,7 @@ The locust tool can be accessed with http://localhost:8089/
 
 Information about locust can be found here : https://locust.io
 
-## Test converage
+## Test coverage
 The test coverage uses the **coverage** module. You can launch the coverage check with :
 ```
 coverage run -m pytest .\tests\unit\
